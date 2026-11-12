@@ -6,6 +6,7 @@ from .commands import COMANDOS
 
 def loop():
     c2 = C2()
+    clear_()
     log(
         f"configurado: LHOST={AMARELO}{c2.opcoes['LHOST']}{RESET}{CINZA} "
         f"LPORT={AMARELO}{c2.opcoes['LPORT']}{RESET}",
@@ -14,7 +15,6 @@ def loop():
     log("use 'help' para comandos, 'run' para iniciar o listener", CINZA)
 
     while c2.rodando:
-        clear_()
         print(BANNER)
         c2.prompt()
         try:
