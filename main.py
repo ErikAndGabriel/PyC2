@@ -15,7 +15,6 @@ def loop():
     log("use 'help' para comandos, 'run' para iniciar o listener", CINZA)
 
     while c2.rodando:
-        print(BANNER)
         c2.prompt()
         try:
             linha = input()
@@ -34,6 +33,7 @@ def loop():
             c2.iniciar_listener()
         elif cmd in ("clear", "limpar"):
             clear_()
+            print(BANNER)
         elif cmd == "stop":
             c2.parar_listener()
         elif cmd == "background":
