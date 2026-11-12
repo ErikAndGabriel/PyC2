@@ -1,3 +1,7 @@
+import os 
+
+def clear_():
+ os.system("clear")
 VERDE = "\033[92m"
 VERMELHO = "\033[91m"
 AMARELO = "\033[93m"
