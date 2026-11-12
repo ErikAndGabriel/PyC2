@@ -7,6 +7,7 @@ from .commands import COMANDOS
 def loop():
     c2 = C2()
     clear_()
+    print(BANNER)
     log(
         f"configurado: LHOST={AMARELO}{c2.opcoes['LHOST']}{RESET}{CINZA} "
         f"LPORT={AMARELO}{c2.opcoes['LPORT']}{RESET}",
