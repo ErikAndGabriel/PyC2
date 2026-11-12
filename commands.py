@@ -102,7 +102,7 @@ def cmd_help(c2, args):
 {CIANO}geral:{RESET}
   {AMARELO}help{RESET}                   esta ajuda
   {AMARELO}exit{RESET}                   encerra C2
-
+  {AMARELO}clear{RESET}                  limpar tela
 {CIANO}qualquer outro texto{RESET} e enviado ao dispositivo ativo.
 """)
 
